@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 from plotly.offline import plot
 import plotly.graph_objs as go
 
@@ -21,3 +21,9 @@ app = Flask(__name__)
 @app.route("/")
 def hello_world():
     return plt_div
+
+
+@app.route("/test")
+def test():
+    print(request)
+    return "worked :)"
