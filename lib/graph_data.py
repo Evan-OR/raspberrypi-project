@@ -10,4 +10,6 @@ class GraphData:
         self.data.append(new_data)
 
     def get(self) -> list:
-        return self.data
+        x = [item[0] for item in self.data]
+        y = [item[1] for item in self.data]
+        return [x, y]

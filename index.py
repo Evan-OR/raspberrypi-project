@@ -12,7 +12,7 @@ real_temp_data = GraphData(100)
 
 @app.route("/")
 def hello_world():
-    time_data, temp_data = make_fake_data(20)
+    time_data, temp_data = real_temp_data.get()
 
     html_graph = get_html_graph(time_data, temp_data)
 
@@ -27,5 +27,5 @@ def test():
         data = request.json
 
         real_temp_data.add(data["tempData"])
-        print(real_temp_data.get())  # remove this, just fir debugg
+        print(real_temp_data.data)  # remove this, just fir debugg
         return "added data bruv, thumbs up emoji"
