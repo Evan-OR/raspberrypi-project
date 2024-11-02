@@ -1,29 +1,31 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify, render_template
 from plotly.offline import plot
 import plotly.graph_objs as go
+from lib.data import get_html_graph, make_fake_data
+from lib.graph_data import GraphData
 
-fig = go.Figure()
-scatter = go.Scatter(
-    x=[0, 1, 2, 3],
-    y=[0, 1, 2, 3],
-    mode="lines",
-    name="test",
-    opacity=0.8,
-    marker_color="green",
-)
-fig.add_trace(scatter)
-fig.update_layout(xaxis_title="X Axis Label", yaxis_title="Y Axis Label")
-plt_div = plot(fig, output_type="div")
 
 app = Flask(__name__)
+
+real_temp_data = GraphData(100)
 
 
 @app.route("/")
 def hello_world():
-    return plt_div
+    time_data, temp_data = make_fake_data(20)
+
+    html_graph = get_html_graph(time_data, temp_data)
+
+    return render_template("index.html", graph=html_graph)
 
 
-@app.route("/test")
+@app.route("/api/data", methods=["POST", "GET"])
 def test():
-    print(request)
-    return "worked :)"
+    if request.method == "GET":
+        return jsonify({"data": real_temp_data})
+    elif request.method == "POST":
+        data = request.json
+
+        real_temp_data.add(data["tempData"])
+        print(real_temp_data.get())  # remove this, just fir debugg
+        return "added data bruv, thumbs up emoji"

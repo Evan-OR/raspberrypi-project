@@ -1,0 +1,26 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  color: white;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  /* Vars */
+  --background-color: #111;
+}
+
+body {
+  background-color: var(--background-color);
+}
+
+.graphWrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.graph {
+  width: 50%;
+}
