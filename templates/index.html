@@ -5,14 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="{{ url_for('static',filename='css/index.css') }}" rel="stylesheet" type="text/css" />
 
+    <script src="{{ url_for('static',filename='javascript/index.js') }}" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+
     <title>Project</title>
   </head>
   <body>
+    <div id="url" data-url="{{ URL }}"></div>
+
     <div><h2>Title idk</h2></div>
     <div class="graphWrapper">
-      <div class="graph">{{ graph|safe }}</div>
-      <div class="graph">{{ graph2|safe }}</div>
-      <div class="graph">{{ graph3|safe }}</div>
+      <canvas id="tempChart"></canvas>
     </div>
   </body>
 </html>

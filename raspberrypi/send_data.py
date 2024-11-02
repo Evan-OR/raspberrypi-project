@@ -1,18 +1,22 @@
 # Script to be ran on the ol' pie
-import requests
 import time
-from sense_hat import SenseHat
+# from sense_hat import SenseHat
 from datetime import datetime
+import random
 
-URL = "http://127.0.0.1:5000/api/data"
+#  [datetime.now().isoformat(), s.get_temperature()]
 
-s = SenseHat()
- 
+import socketio
+
+
+sio = socketio.Client()
+
+sio.connect('http://localhost:5000')
 
 while True:
-  data = {
-    "tempData": [datetime.now().isoformat(), s.get_temperature()]
-  }
-
-  requests.post(URL, json=data)
-  time.sleep(1)
+    temperature_data = {
+        "tempData": [345634563456, 28]
+    }
+    sio.emit('receive_data', temperature_data)
+    print("Sent message:", temperature_data)
+    time.sleep(1)
