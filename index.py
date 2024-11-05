@@ -11,17 +11,16 @@ URL = os.getenv("URL")
 app = Flask(__name__)
 socketio = SocketIO(app, cors_allowed_origins="*")
 
-real_temp_data = GraphData(100)
+TEMP_DATA = GraphData(100)
+GYRO_DATA = {"x": 0, "y": 0, "z": 0}
 
 
 @socketio.on("receive_data")
 def handle_temp_data(data):
-    data = data["tempData"]
-    real_temp_data.add(data)
+    print("Received Data", data)
+    TEMP_DATA.add(data["tempData"])
 
-    print(f"Received temperature data - Timestamp: {data[0]}, Temperature: {data[1]}")
-
-    message = {"tempData": real_temp_data.get()}
+    message = {"tempData": TEMP_DATA.get(), "gyroData": data["gyroData"]}
     socketio.emit("update_data", message)
 
 

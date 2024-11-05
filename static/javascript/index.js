@@ -46,7 +46,12 @@ socket.on('connect', () => {
 });
 
 socket.on('update_data', (response) => {
-  console.log(response['tempData']);
+  console.log(response);
+
+  const gryoElement = document.getElementById('gyroData');
+  gryoElement.innerText = Object.entries(response['gyroData'])
+    .map(([key, value]) => `${key}: ${value}`)
+    .join(', ');
 
   gTemperatureData = response['tempData'];
   createChart();
