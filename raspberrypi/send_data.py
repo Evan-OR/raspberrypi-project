@@ -18,13 +18,15 @@ sio = socketio.Client()
 def connect():
     print("Connected to server")
 
-    while True:
-        data = {
-            "tempData": [datetime.now().isoformat(), s.get_temperature()],
-            "gyroData": s.get_accelerometer_raw()
-        }
-        sio.emit('receive_data', data)
-        print("Sent message:", data)
-        time.sleep(0.05)
 
 sio.connect(args.u)
+
+while True:
+    data = {
+        "tempData": [datetime.now().isoformat(), s.get_temperature()],
+        "gyroData": s.get_accelerometer_raw()
+    }
+    sio.emit('receive_data', data)
+    print("Sent message:", data)
+    time.sleep(0.05)
+    
