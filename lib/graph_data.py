@@ -9,7 +9,13 @@ class GraphData:
 
         self.data.append(new_data)
 
-    def get(self) -> list:
+    def get_formatted_data(self) -> list:
         x = [item[0] for item in self.data]
         y = [item[1] for item in self.data]
         return [x, y]
+
+    def get_last(self) -> list | None:
+        if not self.data:
+            return None
+
+        return self.data[-1]

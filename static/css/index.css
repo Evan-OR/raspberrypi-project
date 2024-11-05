@@ -14,13 +14,13 @@
 
 body {
   background-color: var(--background-color);
-}
-
-.graphWrapper {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
 }
 
-.graph {
+.sectionWrapper {
+  display: flex;
+}
+.section {
   width: 50%;
 }
