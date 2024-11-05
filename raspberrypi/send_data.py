@@ -3,12 +3,18 @@ import time
 from sense_hat import SenseHat
 from datetime import datetime
 import socketio
+import argparse
+
+parser = argparse.ArgumentParser("raspberrypi_websocket_client")
+parser.add_argument("-u", help="Url of the sever", required=True, type=str)
+args = parser.parse_args()
+print(args.u)
 
 s = SenseHat()
 
 sio = socketio.Client()
 
-sio.connect('http://192.168.51.127:5000')
+sio.connect(args.u)
 
 while True:
     temperature_data = {
