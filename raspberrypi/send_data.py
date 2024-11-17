@@ -24,7 +24,7 @@ sio.connect(args.u)
 while True:
     data = {
         "tempData": [datetime.now().isoformat(), s.get_temperature()],
-        "gyroData": s.get_accelerometer_raw()
+        "gyroData": s.get_gyroscope_raw()
     }
     sio.emit('receive_data', data)
     print("Sent message:", data)

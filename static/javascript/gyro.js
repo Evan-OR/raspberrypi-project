@@ -20,27 +20,30 @@ scene.add(light);
 const ambientLight = new THREE.AmbientLight(0x404040);
 scene.add(ambientLight);
 
-camera.position.set(0, 0, -5);
+cuboid.position.set(0, -2, 0);
 camera.lookAt(cuboid.position);
 
-function animate() {
+const degreesToRadians = (deg) => (deg * Math.PI) / 180;
+
+const animate = () => {
   requestAnimationFrame(animate);
   const calibratedFlatOrientation = new THREE.Euler(
-    gGyroCalibratedRotation.x,
-    gGyroCalibratedRotation.y,
-    gGyroCalibratedRotation.z
+    gGyroCalibratedRotation.roll,
+    gGyroCalibratedRotation.pitch,
+    gGyroCalibratedRotation.yaw
   );
-  const targetRotation = new THREE.Euler(
-    gGyroData.x - calibratedFlatOrientation.x,
-    gGyroData.y - calibratedFlatOrientation.y,
-    gGyroData.z - calibratedFlatOrientation.z
+  const targetQuaternion = new THREE.Quaternion();
+  targetQuaternion.setFromEuler(
+    new THREE.Euler(
+      degreesToRadians(gGyroData.pitch - gGyroCalibratedRotation.roll),
+      degreesToRadians(gGyroData.yaw - gGyroCalibratedRotation.pitch),
+      degreesToRadians(gGyroData.roll - gGyroCalibratedRotation.yaw)
+    )
   );
 
-  cuboid.rotation.x += (targetRotation.x - cuboid.rotation.x) * 0.1;
-  cuboid.rotation.y += (targetRotation.y - cuboid.rotation.y) * 0.1;
-  cuboid.rotation.z += (targetRotation.z - cuboid.rotation.z) * 0.1;
+  cuboid.quaternion.slerp(targetQuaternion, 0.1);
 
   renderer.render(scene, camera);
-}
+};
 
 animate();

@@ -7,8 +7,8 @@ const socket = io.connect(SERVER_URL);
 let gTemperatureData = [[], []];
 let gTemperatureChart = null;
 
-let gGyroData = { x: 0, y: 0, z: 0 };
-let gGyroCalibratedRotation = { x: 0, y: 0, z: 0 };
+let gGyroData = { roll: 0, pitch: 0, yaw: 0 };
+let gGyroCalibratedRotation = { roll: 0, pitch: 0, yaw: 0 };
 
 socket.on('connect', () => {
   console.log('Connected');
