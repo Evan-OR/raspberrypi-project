@@ -22,10 +22,11 @@ def connect():
 sio.connect(args.u)
 
 while True:
+    timestamp = datetime.now().isoformat()
     data = {
-        "tempData": [datetime.now().isoformat(), s.get_temperature()],
-        "humidData": [datetime.now().isoformat(), s.get_humidity()],
-        "gyroData": s.get_gyroscope_raw()
+        "tempData": [timestamp, s.get_temperature()],
+        "humidData": [timestamp, s.get_humidity()],
+        "gyroData": s.get_gyroscope()
     }
     sio.emit('receive_data', data)
     print("Sent message:", data)

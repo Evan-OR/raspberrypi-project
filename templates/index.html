@@ -14,21 +14,25 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
-    <title>Project</title>
+    <title>RaspberryPi Data</title>
   </head>
   <body>
     <div id="url" data-url="{{ URL }}"></div>
-
-    <h2>Title idk</h2>
-
+    <h2>RaspberryPi Data</h2>
     <div class="sectionWrapper">
       <div class="section">
         <canvas id="tempChart"></canvas>
       </div>
 
+      <div class="section">
+        <canvas id="humidChart"></canvas>
+      </div>
+    </div>
+
+    <div class="sectionWrapper">
       <div id="gyroSection" class="section">
         <button id="calButton">Click to Calibrate Rotation</button>
-        <div id="gyroData">x: 0, y: 0, z: 0</div>
+        <div id="gyroData">roll: 0, pitch: 0, yaw: 0</div>
       </div>
     </div>
   </body>

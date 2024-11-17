@@ -1,12 +1,11 @@
-const createChart = (tempData, humidData) => {
-  const [xData, yData] = tempData;
-  const [xHumidData, yHumidData] = humidData;
+const createChart = (chartData, chartId, chartLabel) => {
+  const [xData, yData] = chartData;
 
-  const ctx = document.getElementById('tempChart');
+  const ctx = document.getElementById(chartId);
 
-  if (gTemperatureChart) gTemperatureChart.destroy();
+  if (window[chartId]) window[chartId].destroy();
 
-  gTemperatureChart = new Chart(ctx, {
+  window[chartId] = new Chart(ctx, {
     type: 'line',
     data: {
       labels: xData.map((time) => {
@@ -15,13 +14,10 @@ const createChart = (tempData, humidData) => {
       }),
       datasets: [
         {
-          label: 'temp',
+          label: chartLabel,
           data: yData,
-          borderWidth: 1,
-        },
-        {
-          label: 'humidity',
-          data: yHumidData,
+          borderColor: chartLabel === 'Temperature' ? '#f2960c' : '#00bbff',
+          backgroundColor: chartLabel === 'Temperature' ? '#ffb74a' : '#4acfff',
           borderWidth: 1,
         },
       ],
@@ -30,13 +26,13 @@ const createChart = (tempData, humidData) => {
       plugins: {
         title: {
           display: true,
-          text: 'Temperature Graph',
+          text: `${chartLabel} Graph`,
         },
       },
       animation: false,
       scales: {
         y: {
-          title: { display: true, text: 'Temperature' },
+          title: { display: true, text: chartLabel },
         },
         x: {
           title: { display: true, text: 'Time' },
