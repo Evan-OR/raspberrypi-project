@@ -24,6 +24,7 @@ sio.connect(args.u)
 while True:
     data = {
         "tempData": [datetime.now().isoformat(), s.get_temperature()],
+        "humidData": [datetime.now().isoformat(), s.get_humidity()],
         "gyroData": s.get_gyroscope_raw()
     }
     sio.emit('receive_data', data)

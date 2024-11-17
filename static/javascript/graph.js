@@ -1,5 +1,6 @@
-const createChart = (tempData) => {
+const createChart = (tempData, humidData) => {
   const [xData, yData] = tempData;
+  const [xHumidData, yHumidData] = humidData;
 
   const ctx = document.getElementById('tempChart');
 
@@ -16,6 +17,11 @@ const createChart = (tempData) => {
         {
           label: 'temp',
           data: yData,
+          borderWidth: 1,
+        },
+        {
+          label: 'humidity',
+          data: yHumidData,
           borderWidth: 1,
         },
       ],

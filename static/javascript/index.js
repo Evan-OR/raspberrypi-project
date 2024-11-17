@@ -5,6 +5,7 @@ const SERVER_URL = urlElement.dataset.url;
 const socket = io.connect(SERVER_URL);
 
 let gTemperatureData = [[], []];
+let gHumidityData = [[], []];
 let gTemperatureChart = null;
 
 let gGyroData = { roll: 0, pitch: 0, yaw: 0 };
@@ -12,7 +13,7 @@ let gGyroCalibratedRotation = { roll: 0, pitch: 0, yaw: 0 };
 
 socket.on('connect', () => {
   console.log('Connected');
-  createChart(gTemperatureData);
+  createChart(gTemperatureData, gHumidityData);
 });
 
 socket.on('update_data', (response) => {
@@ -25,7 +26,8 @@ socket.on('update_data', (response) => {
 
   gGyroData = response['gyroData'];
   gTemperatureData = response['tempData'];
-  createChart(gTemperatureData);
+  gHumidityData = response['humidData'];
+  createChart(gTemperatureData, gHumidityData);
 });
 
 document.getElementById('calButton').addEventListener('click', (e) => {

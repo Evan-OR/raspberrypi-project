@@ -14,30 +14,26 @@ scene.add(cuboid);
 camera.position.z = 5;
 
 const light = new THREE.DirectionalLight(0xffffff, 1);
-light.position.set(5, 5, 5).normalize();
+light.position.set(5, 5, 2).normalize();
 scene.add(light);
 
 const ambientLight = new THREE.AmbientLight(0x404040);
 scene.add(ambientLight);
 
-cuboid.position.set(0, -2, 0);
+cuboid.position.set(0, -1, 0);
 camera.lookAt(cuboid.position);
 
 const degreesToRadians = (deg) => (deg * Math.PI) / 180;
 
 const animate = () => {
   requestAnimationFrame(animate);
-  const calibratedFlatOrientation = new THREE.Euler(
-    gGyroCalibratedRotation.roll,
-    gGyroCalibratedRotation.pitch,
-    gGyroCalibratedRotation.yaw
-  );
+
   const targetQuaternion = new THREE.Quaternion();
   targetQuaternion.setFromEuler(
     new THREE.Euler(
-      degreesToRadians(gGyroData.pitch - gGyroCalibratedRotation.roll),
-      degreesToRadians(gGyroData.yaw - gGyroCalibratedRotation.pitch),
-      degreesToRadians(gGyroData.roll - gGyroCalibratedRotation.yaw)
+      degreesToRadians(gGyroData.pitch - gGyroCalibratedRotation.pitch),
+      degreesToRadians(-(gGyroData.yaw - gGyroCalibratedRotation.yaw)),
+      degreesToRadians(-gGyroData.roll - -gGyroCalibratedRotation.roll)
     )
   );
 

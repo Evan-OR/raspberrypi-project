@@ -9,7 +9,8 @@ URL = os.getenv("URL")
 app = Flask(__name__)
 socketio = SocketIO(app, cors_allowed_origins="*")
 
-TEMP_DATA = GraphData(100)
+TEMP_DATA = GraphData()
+HUMIDITY_DATA = GraphData()
 
 
 @socketio.on("receive_data")
@@ -23,8 +24,13 @@ def handle_temp_data(data):
         datetime.fromisoformat(timestamp) - datetime.fromisoformat(last_data_point[0])
     ) >= timedelta(seconds=1):
         TEMP_DATA.add(data["tempData"])
+        HUMIDITY_DATA.add(data["humidData"])
 
-    message = {"tempData": TEMP_DATA.get_formatted_data(), "gyroData": data["gyroData"]}
+    message = {
+        "tempData": TEMP_DATA.get_formatted_data(),
+        "humidData": HUMIDITY_DATA.get_formatted_data(),
+        "gyroData": data["gyroData"],
+    }
     socketio.emit("update_data", message)
 
 
