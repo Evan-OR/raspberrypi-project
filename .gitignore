@@ -1,2 +1,3 @@
 rasp
 __pycache__
+*.db
