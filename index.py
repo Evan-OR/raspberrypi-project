@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask_socketio import SocketIO
 from lib.graph_data import GraphData
 from datetime import datetime, timedelta
@@ -36,4 +36,4 @@ def handle_temp_data(data):
 
 @app.route("/")
 def hello_world():
-    return render_template("index.html", URL=URL)
+    return render_template("index.html", URL=request.url)
