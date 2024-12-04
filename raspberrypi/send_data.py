@@ -38,30 +38,34 @@ def connect():
 sio.connect(args.u)
 
 
-while True:
-    timestamp = datetime.now().isoformat()
-    tempData = s.get_temperature()
-    humidData = s.get_humidity()
-    gyroData = s.get_gyroscope()
+try:
+    while True:
+        timestamp = datetime.now().isoformat()
+        tempData = s.get_temperature()
+        humidData = s.get_humidity()
+        gyroData = s.get_gyroscope()
 
-    data = {
-        "tempData": [timestamp, tempData],
-        "humidData": [timestamp, humidData],
-            "gyroData": gyroData
-    }
+        data = {
+            "tempData": [timestamp, tempData],
+            "humidData": [timestamp, humidData],
+                "gyroData": gyroData
+        }
 
-    db_data = [
-        ("temperature", str(tempData), timestamp),
-        ("humidity", str(humidData), timestamp),
-        ("gyroscope", str(gyroData), timestamp)
-    ]
+        db_data = [
+            ("temperature", str(tempData), timestamp),
+            ("humidity", str(humidData), timestamp),
+            ("gyroscope", str(gyroData), timestamp)
+        ]
 
-    cursor.executemany(
-        "INSERT INTO my_table (type, data, timestamp) VALUES (?, ?, ?)",
-        db_data
-    )
-    connection.commit()
+        cursor.executemany(
+            "INSERT INTO my_table (type, data, timestamp) VALUES (?, ?, ?)",
+            db_data
+        )
+        connection.commit()
 
-    sio.emit('receive_data', data)
-    print("Sent message:", data)
-    time.sleep(0.05)
+        sio.emit('receive_data', data)
+        print("Sent message:", data)
+        time.sleep(0.08)
+except:
+    connection.close()
+    print("Stopping!")
